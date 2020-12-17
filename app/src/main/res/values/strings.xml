@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Password Generator App</string>
+    <string name="generate">Generate</string>
+    <string name="switchLowLetters">Low Letters</string>
+    <string name="switchUpLetters">Up Letters</string>
+    <string name="switchNumbers">Numbers</string>
+    <string name="switchSymbols">Symbols</string>
+    <string name="passTextResult">Your pass!</string>
+</resources>
