@@ -1,10 +1,9 @@
 package com.example.passwordgeneratorapp
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.os.Bundle
-import android.widget.Button
-import android.widget.Switch
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
@@ -14,7 +13,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val generateButton: Button = findViewById(R.id.generate_button)
-        //generateButton.setOnClickListener{ generatePass() }
+        val copyBtn: Button = findViewById(R.id.copyText_button)
+        val copyTxt: TextView = findViewById(R.id.pass_Text)
+
+        //Initializing cpliboardManager and clip data
+        var clipBoardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        var clipData: ClipData
+
+        //Action when copy button is clicked
+        copyBtn.setOnClickListener {
+            val txtCopy = copyTxt!!.text.toString()
+            clipData = ClipData.newPlainText("textMy", txtCopy)
+            clipBoardManager.setPrimaryClip(clipData)
+            Toast.makeText(this, "Copied to clipboard", Toast.LENGTH_SHORT).show()
+        }
 
         //When Generate button is clicked I check if all switches are OFF. Is so, a toast warning shows.
         //If at least one of them is ON, generatePass() is executed
@@ -25,6 +37,23 @@ class MainActivity : AppCompatActivity() {
                 generatePass()
             }
         }
+
+        //Set seekBar Listener
+        val lengthSizeBar: SeekBar = findViewById<SeekBar>(R.id.lengthSize_seekBar)
+        val thisInt: TextView = findViewById(R.id.editTextNumber)
+        lengthSizeBar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(lengthSizeBar: SeekBar, progress: Int, fromUser: Boolean) {
+                thisInt.text = progress.toString()
+            }
+
+            override fun onStartTrackingTouch(lengthSizeBar: SeekBar) {
+            }
+
+            override fun onStopTrackingTouch(lengthSizeBar: SeekBar) {
+                Toast.makeText(this@MainActivity, "Size of password: " + lengthSizeBar.progress, Toast.LENGTH_SHORT).show()
+            }
+
+        })
     }
 
     //This function is executed when Generate button is clicked. It looks for the TextView and edit/inserts generated password
@@ -57,20 +86,20 @@ class MainActivity : AppCompatActivity() {
     //function that determines the Size/Lentght of the password
     // This is to be updated with a slider and a field asking for user input
     fun mySizePass():Int {
-        val myInt = 12
-        return myInt
+        val value: TextView = findViewById(R.id.editTextNumber)
+        return value.getText().toString().toInt()
     }
 
     //My Main Function where password is generated. Wrote this code in IntelliJ and tweaked a little to better suit this app
     fun myRandomPass():String {
         var finalPass: String = ""
 
-        fun randomPass(sizeOfPass: Int = 8, lettersLow: Boolean = true, lettersUp:Boolean = true, numbers: Boolean = true, symbols: Boolean = true ): String {
+        fun randomPass(sizeOfPass: Int = 8, lettersLow: Boolean = true, lettersUp: Boolean = true, numbers: Boolean = true, symbols: Boolean = true): String {
 
             //Declare list of characters to create password
             val listAbc = listOf<Char>('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
                     's', 't', 'u', 'v', 'w', 'x', 'y', 'z')
-            val listNumbers = listOf<Char>('0','1', '2', '3', '4', '5', '6', '7', '8', '9')
+            val listNumbers = listOf<Char>('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
             val listSymbols = listOf<Char>('!', '?', '(', ')', '[', ']', '{', '}', '"', '<', '>', '"', ':', ';', '.', ',',
                     '-', '_', '|', '^', '~', '@', '&', '$')
 
