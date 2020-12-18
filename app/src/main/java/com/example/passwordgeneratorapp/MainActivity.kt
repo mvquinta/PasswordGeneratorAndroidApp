@@ -8,22 +8,29 @@ import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var finalPass: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //finalPass = ""
         val generateButton: Button = findViewById(R.id.generate_button)
         val copyBtn: Button = findViewById(R.id.copyText_button)
         val copyTxt: TextView = findViewById(R.id.pass_Text)
 
-        //Initializing cpliboardManager and clip data
+        //Initializing clipBoardManager and clip data
+        //Code from geeksforgeeks.org - clipboard-in-android
         var clipBoardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
         var clipData: ClipData
 
         //Action when copy button is clicked
         copyBtn.setOnClickListener {
+            // Text from the edit text is stored in a val
             val txtCopy = copyTxt!!.text.toString()
+            // clip data is initialized with the text variable declared above
             clipData = ClipData.newPlainText("textMy", txtCopy)
+            // Clipboard saves this clip object
             clipBoardManager.setPrimaryClip(clipData)
             Toast.makeText(this, "Copied to clipboard", Toast.LENGTH_SHORT).show()
         }
@@ -57,14 +64,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     //This function is executed when Generate button is clicked. It looks for the TextView and edit/inserts generated password
-    //Should I put inside this function if statement to see if at least one switch is on?
     private fun generatePass() {
         val resultGeneratePassText: TextView = findViewById(R.id.pass_Text)
-        resultGeneratePassText.text = myRandomPass()
-        //Toast.makeText(this, "Don't forget your pass!", Toast.LENGTH_SHORT).show()
+        resultGeneratePassText.text = randomPass()
     }
 
-    //functions that return if switchs are ON or OFF.
+    //Functions that return if switch are ON or OFF.
     // It would be cool to check them all in one only function.
     fun switchLowLetters():Boolean {
         val myLowLettersSwitch: Switch = findViewById(R.id.lowLetters_switch)
@@ -83,18 +88,14 @@ class MainActivity : AppCompatActivity() {
         return mySymbolsSwitch.isChecked()
     }
 
-    //function that determines the Size/Lentght of the password
-    // This is to be updated with a slider and a field asking for user input
+    //Function that determines the Size/Length of the password
     fun mySizePass():Int {
         val value: TextView = findViewById(R.id.editTextNumber)
         return value.getText().toString().toInt()
     }
 
     //My Main Function where password is generated. Wrote this code in IntelliJ and tweaked a little to better suit this app
-    fun myRandomPass():String {
-        var finalPass: String = ""
-
-        fun randomPass(sizeOfPass: Int = 8, lettersLow: Boolean = true, lettersUp: Boolean = true, numbers: Boolean = true, symbols: Boolean = true): String {
+    fun randomPass(sizeOfPass: Int = mySizePass(), lettersLow: Boolean = switchLowLetters(), lettersUp: Boolean = switchUpLetters(), numbers: Boolean = switchNumbers(), symbols: Boolean = switchSymbols()): String {
 
             //Declare list of characters to create password
             val listAbc = listOf<Char>('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
@@ -149,8 +150,4 @@ class MainActivity : AppCompatActivity() {
             finalPass = String(tempListPassChar.toCharArray())
             return finalPass
         }
-        //passes all user options as arguments for randomPass() and returns value
-        return randomPass(mySizePass(), switchLowLetters(), switchUpLetters(), switchNumbers(), switchSymbols())
-    }
-
 }
