@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 
 class MainActivity : AppCompatActivity() {
 
@@ -47,10 +48,19 @@ class MainActivity : AppCompatActivity() {
 
         //Set seekBar Listener
         val lengthSizeBar: SeekBar = findViewById<SeekBar>(R.id.lengthSize_seekBar)
-        val thisInt: TextView = findViewById(R.id.editTextNumber)
+        val thisInt: TextView = findViewById(R.id.lengthPass_text)
+        val passStrengthWarning = findViewById<TextView>(R.id.passStrength_text)
         lengthSizeBar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(lengthSizeBar: SeekBar, progress: Int, fromUser: Boolean) {
                 thisInt.text = progress.toString()
+                when (thisInt.text.toString().toInt()) {
+                    in 6..16 -> {passStrengthWarning.text = getString(R.string.passStrength_weak)
+                        passStrengthWarning.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_weak))}
+                    in 17..30 -> {passStrengthWarning.text = getString(R.string.passStrength_good)
+                        passStrengthWarning.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_good))}
+                    in 18..50 -> {passStrengthWarning.text = getString(R.string.passStrength_strong)
+                        passStrengthWarning.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_strong))}
+                }
             }
 
             override fun onStartTrackingTouch(lengthSizeBar: SeekBar) {
@@ -90,7 +100,7 @@ class MainActivity : AppCompatActivity() {
 
     //Function that determines the Size/Length of the password
     fun mySizePass():Int {
-        val value: TextView = findViewById(R.id.editTextNumber)
+        val value: TextView = findViewById(R.id.lengthPass_text)
         return value.getText().toString().toInt()
     }
 

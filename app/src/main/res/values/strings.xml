@@ -7,4 +7,8 @@
     <string name="switchNumbers">Numbers</string>
     <string name="switchSymbols">Symbols</string>
     <string name="passTextResult">Your pass!</string>
+    <string name="lengthText">8</string>
+    <string name="passStrength_weak">Weak</string>
+    <string name="passStrength_good">Good</string>
+    <string name="passStrength_strong">Strong</string>
 </resources>
