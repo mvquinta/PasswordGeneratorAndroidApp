@@ -50,18 +50,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/generate_button" />
 
-    <EditText
+    <TextView
         android:id="@+id/lengthPass_text"
-        android:layout_width="40dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="80dp"
-        android:ems="10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="90dp"
         android:fontFamily="@font/nunito"
         android:importantForAutofill="no"
-        android:inputType="number"
         android:text="@string/lengthText"
         android:textAlignment="center"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/copyText_button" />
 
@@ -71,8 +70,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:fontFamily="@font/nunito_bold"
-        android:text="@string/passStrength_weak"
-        android:textColor="@color/passStrength_color_weak"
+        android:text="@string/passStrength_strong"
+        android:textColor="@color/passStrength_color_strong"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,8 +85,12 @@
         android:layout_marginTop="96dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/nunito"
+        android:maxHeight="3dp"
+        android:maxWidth="3dp"
+        android:progressDrawable="@color/black"
         android:max="50"
-        android:min="6"
+        android:min="4"
+        android:progress="10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/lengthPass_text"
         app:layout_constraintTop_toBottomOf="@+id/copyText_button" />

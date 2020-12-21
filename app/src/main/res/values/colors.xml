@@ -7,7 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="passStrength_color_very_weak">#FD0000</color>
     <color name="passStrength_color_weak">#FF6666</color>
     <color name="passStrength_color_good">#FFB366</color>
-    <color name="passStrength_color_strong">#326432</color>
+    <color name="passStrength_color_strong">#458845</color>
+    <color name="passStrength_color_very_strong">#054505</color>
+    <color name="myColorTest">#9C27B0</color>
+    <color name="myColorTest2">#FFEB3B</color>
 </resources>
