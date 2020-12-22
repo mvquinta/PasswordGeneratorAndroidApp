@@ -1,11 +1,13 @@
 package com.example.passwordgeneratorapp
 
+import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -47,26 +49,54 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+
         //Set seekBar Listener
         val lengthSizeBar: SeekBar = findViewById<SeekBar>(R.id.lengthSize_seekBar)
         val thisInt: TextView = findViewById(R.id.lengthPass_text)
         val passStrengthWarning = findViewById<TextView>(R.id.passStrength_text)
 
         lengthSizeBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            @SuppressLint("NewApi")
             override fun onProgressChanged(lengthSizeBar: SeekBar, progress: Int, fromUser: Boolean) {
                 thisInt.text = progress.toString()
+
+                /*if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                            lengthSizeBar.thumb.setTint(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_weak))
+                            lengthSizeBar.progressDrawable.setTint(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_weak))
+                            }*/
+
                 val myProgressiveNum = passStrengthLevel(thisInt.text.toString().toInt())
                 when (myProgressiveNum) {
-                    in 2..24 -> {passStrengthWarning.text = getString(R.string.passStrength_weak)
-                    passStrengthWarning.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_weak))}
-                    in 25..49 -> {passStrengthWarning.text = getString(R.string.passStrength_good)
-                    passStrengthWarning.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_good))}
-                    in 50..89 -> {passStrengthWarning.text = getString(R.string.passStrength_strong)
-                    passStrengthWarning.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_strong))}
-                    in 90..1000 -> {passStrengthWarning.text = getString(R.string.passStrength_very_strong)
-                    passStrengthWarning.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_very_strong))}
-                    else -> {passStrengthWarning.text = getString(R.string.passStrength_very_weak)
-                        passStrengthWarning.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_very_weak))}
+                    in 2..24 -> {
+                        passStrengthWarning.text = getString(R.string.passStrength_weak)
+                        passStrengthWarning.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_weak))
+                        lengthSizeBar.thumb.setTint(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_weak))
+                        lengthSizeBar.progressDrawable.setTint(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_weak))
+                    }
+                    in 25..49 -> {
+                        passStrengthWarning.text = getString(R.string.passStrength_good)
+                        passStrengthWarning.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_good))
+                        lengthSizeBar.thumb.setTint(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_good))
+                        lengthSizeBar.progressDrawable.setTint(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_good))
+                    }
+                    in 50..89 -> {
+                        passStrengthWarning.text = getString(R.string.passStrength_strong)
+                        passStrengthWarning.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_strong))
+                        lengthSizeBar.thumb.setTint(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_strong))
+                        lengthSizeBar.progressDrawable.setTint(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_strong))
+                    }
+                    in 90..1000 -> {
+                        passStrengthWarning.text = getString(R.string.passStrength_very_strong)
+                        passStrengthWarning.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_very_strong))
+                        lengthSizeBar.thumb.setTint(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_very_strong))
+                        lengthSizeBar.progressDrawable.setTint(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_very_strong))
+                    }
+                    else -> {
+                        passStrengthWarning.text = getString(R.string.passStrength_very_weak)
+                        passStrengthWarning.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_very_weak))
+                        lengthSizeBar.thumb.setTint(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_very_weak))
+                        lengthSizeBar.progressDrawable.setTint(ContextCompat.getColor(this@MainActivity, R.color.passStrength_color_very_weak))
+                    }
                 }
             }
 
