@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.passwordgeneratorapp"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -32,6 +32,11 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    buildFeatures {
+        dataBinding true
+    }
+
 }
 
 dependencies {

@@ -7,19 +7,24 @@ import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
+import com.example.passwordgeneratorapp.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
 
     lateinit var finalPass: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        //setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        val generateButton: Button = findViewById(R.id.generate_button)
-        val copyBtn: Button = findViewById(R.id.copyText_button)
-        val copyTxt: TextView = findViewById(R.id.pass_Text)
+        val generateButton: Button = binding.generateButton
+        val copyBtn: Button = binding.copyTextButton
+        val copyTxt: TextView = binding.passText
         generatePass()
 
         //Initializing clipBoardManager and clip data
@@ -51,9 +56,9 @@ class MainActivity : AppCompatActivity() {
 
 
         //Set seekBar Listener
-        val lengthSizeBar: SeekBar = findViewById<SeekBar>(R.id.lengthSize_seekBar)
-        val thisInt: TextView = findViewById(R.id.lengthPass_text)
-        val passStrengthWarning = findViewById<TextView>(R.id.passStrength_text)
+        val lengthSizeBar: SeekBar = binding.lengthSizeSeekBar
+        val thisInt: TextView = binding.lengthPassText
+        val passStrengthWarning = binding.passStrengthText
 
         lengthSizeBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             @SuppressLint("NewApi")
@@ -111,7 +116,7 @@ class MainActivity : AppCompatActivity() {
 
     //This function is executed when Generate button is clicked. It looks for the TextView and edit/inserts generated password
     private fun generatePass() {
-        val resultGeneratePassText: TextView = findViewById(R.id.pass_Text)
+        val resultGeneratePassText: TextView = binding.passText
         resultGeneratePassText.text = randomPass()
     }
 
@@ -119,10 +124,10 @@ class MainActivity : AppCompatActivity() {
     //If all switchs are off, numSwitchesOn = 0, I wont be able to create a password
     //If numSwitchesOn = 1, 2, 3 or 4 it means, respectively, a weak, good, strong and very strong password
     private fun passStrengthSwitchLevel(): Int {
-        val myLowLettersSwitch: Switch = findViewById(R.id.lowLetters_switch)
-        val myUpLettersSwitch: Switch = findViewById(R.id.upLetters_switch)
-        val myNumbersSwitch: Switch = findViewById(R.id.numbers_switch)
-        val mySymbolsSwitch: Switch = findViewById(R.id.symbols_switch)
+        val myLowLettersSwitch: Switch = binding.lowLettersSwitch
+        val myUpLettersSwitch: Switch = binding.upLettersSwitch
+        val myNumbersSwitch: Switch = binding.numbersSwitch
+        val mySymbolsSwitch: Switch = binding.symbolsSwitch
         var numSwitchesOn:Int = 0
         val mySwitchList = listOf<Switch>(myLowLettersSwitch, myUpLettersSwitch, myNumbersSwitch, mySymbolsSwitch)
 
@@ -154,25 +159,25 @@ class MainActivity : AppCompatActivity() {
     //Functions that return if switch are ON or OFF.
     // It would be cool to check them all in one only function.
     private fun switchLowLetters():Boolean {
-        val myLowLettersSwitch: Switch = findViewById(R.id.lowLetters_switch)
+        val myLowLettersSwitch: Switch = binding.lowLettersSwitch
         return myLowLettersSwitch.isChecked()
     }
     private fun switchUpLetters():Boolean {
-        val myUpLettersSwitch: Switch = findViewById(R.id.upLetters_switch)
+        val myUpLettersSwitch: Switch = binding.upLettersSwitch
         return myUpLettersSwitch.isChecked()
     }
     private fun switchNumbers():Boolean {
-        val myNumbersSwitch: Switch = findViewById(R.id.numbers_switch)
+        val myNumbersSwitch: Switch = binding.numbersSwitch
         return myNumbersSwitch.isChecked()
     }
     private fun switchSymbols():Boolean {
-        val mySymbolsSwitch: Switch = findViewById(R.id.symbols_switch)
+        val mySymbolsSwitch: Switch = binding.symbolsSwitch
         return mySymbolsSwitch.isChecked()
     }
 
     //Function that determines the Size/Length of the password
     private fun mySizePass():Int {
-        val value: TextView = findViewById(R.id.lengthPass_text)
+        val value: TextView = binding.lengthPassText
         return value.getText().toString().toInt()
     }
 
